@@ -1,0 +1,14 @@
+modLoader="javafml"
+loaderVersion="[31,)"
+#issueTrackerURL=""
+license="MIT"
+
+[[mods]]
+modId="portables"
+version="${file.jarVersion}"
+displayName="Portables"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/portables"
+authors="Mrbysco, ShyNieke"
+description='''
+Allow you to access block functions portably
+'''
