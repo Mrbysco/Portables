@@ -14,7 +14,7 @@ public class ContainerDistanceMixin {
 
   @Overwrite
   protected static boolean isWithinUsableDistance(IWorldPosCallable worldPos, PlayerEntity playerIn, Block targetBlock) {
-    System.out.println("This works on grindstone and Loom and workbench and stonecutter but not chest? " + playerIn.getHeldItem(Hand.MAIN_HAND));
+    System.out.println("generic This works on grindstone and Loom and workbench and stonecutter but not chest? " + playerIn.getHeldItem(Hand.MAIN_HAND));
     ChestContainer fun;
     return true;
   }
