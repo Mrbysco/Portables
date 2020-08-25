@@ -33,6 +33,7 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
+            arg "-mixin.config=mixins.portables.json"
 
             // Recommended logging data for a userdev environment
             // property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
@@ -49,6 +50,7 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
+            arg "-mixin.config=mixins.portables.json"
 
             // Recommended logging data for a userdev environment
             // property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
@@ -101,7 +103,7 @@ repositories {
 	}
 }
 mixin {
-// IMPORTANT: RUN CONFIGURATION PROGRAM ARGUMENTS   --mixin mixins.myplugin.json
+// IMPORTANT: RUN CONFIGURATION PROGRAM ARGUMENTS   --mixin mixins.portables.json
        add sourceSets.main, "main.refmap.json"
 
        disableTargetValidator = false
@@ -124,7 +126,7 @@ jar {
             "Implementation-Vendor" :"ShyNieke",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
             "TweakClass": 'org.spongepowered.asm.launch.MixinTweaker',
-            "MixinConfigs": 'mixins.myplugin.json',
+            "MixinConfigs": 'mixins.portables.json',
             "FMLCorePluginContainsFMLMod": 'true'
         ])
     }
