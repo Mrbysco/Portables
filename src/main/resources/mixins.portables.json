@@ -1,13 +1,13 @@
 {
-    "required": true,
-    "minVersion": "0.7.10",
-    "package": "com.shynieke.portables.mixin",
-    "refmap": "mixins.portables.refmap.json",
-    "target": "@env(DEFAULT)",
-    "compatibilityLevel": "JAVA_8",
-    "mixins": [
-    	"ContainerDistanceMixin",
-    	"ContainerChestDistanceMixin",
-    	"InventoryDistanceMixin"
-    ]
+  "required": true,
+  "minVersion": "0.7.10",
+  "package": "com.shynieke.portables.mixin",
+  "refmap": "mixins.portables.refmap.json",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "ContainerDistanceMixin",
+    "ContainerChestDistanceMixin",
+    "InventoryDistanceMixin"
+  ]
 }
