@@ -1,19 +1,15 @@
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
-        maven { url = 'https://dist.creeper.host/Sponge/maven' }
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-apply plugin: 'eclipse'
-apply plugin: 'org.spongepowered.mixin'
 
 version = "${version}"
 group = 'com.shynieke.portables' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -24,8 +20,6 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 minecraft {
     mappings  channel: "${mcp_channel}", version: "${mcp_mappings}"
 
-
-
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
@@ -33,7 +27,6 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
-            arg "-mixin.config=mixins.portables.json"
 
             // Recommended logging data for a userdev environment
             // property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
@@ -50,7 +43,6 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
-            arg "-mixin.config=mixins.portables.json"
 
             // Recommended logging data for a userdev environment
             // property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
@@ -102,12 +94,7 @@ repositories {
 		url = "https://modmaven.k-4u.nl/"
 	}
 }
-mixin {
-// IMPORTANT: RUN CONFIGURATION PROGRAM ARGUMENTS   --mixin mixins.portables.json
-       add sourceSets.main, "main.refmap.json"
 
-       disableTargetValidator = false
-}
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 	
