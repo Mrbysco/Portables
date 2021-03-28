@@ -1,11 +1,17 @@
 package com.shynieke.portables.items;
 
+import com.shynieke.portables.Portables;
+import com.shynieke.portables.fake.FakePlayerHelper;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.container.ChestContainer;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -25,6 +31,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent.Open;
 
 import javax.annotation.Nullable;
@@ -93,7 +100,9 @@ public class PortableItem extends Item {
         if(state.getBlock() != Blocks.AIR) {
             INamedContainerProvider provider = state.getBlock().getContainer(state, worldIn, pos);
             if(provider != null) {
-                openContainer(serverPlayer, provider);
+                ServerPlayerEntity fakePlayer = serverPlayer instanceof FakePlayer ? serverPlayer : FakePlayerHelper.getFakePlayer(worldIn, serverPlayer.getGameProfile());
+                fakePlayer.setRawPosition(pos.getX(), pos.getY() + 1, pos.getZ());
+                openContainer(serverPlayer, fakePlayer, provider);
             } else {
                 ActionResultType actionresulttype = state.onBlockActivated(worldIn, serverPlayer, handIn, fakeRayTrace);
                 if (actionresulttype.isSuccessOrConsume()) {
@@ -103,7 +112,7 @@ public class PortableItem extends Item {
         }
     }
 
-    public OptionalInt openContainer(ServerPlayerEntity playerIn, @Nullable INamedContainerProvider containerProvider) {
+    public OptionalInt openContainer(ServerPlayerEntity playerIn, ServerPlayerEntity fakePlayer, @Nullable INamedContainerProvider containerProvider) {
         if (containerProvider == null) {
             return OptionalInt.empty();
         } else {
@@ -112,9 +121,8 @@ public class PortableItem extends Item {
             }
 
             playerIn.getNextWindowId();
-            Container original = containerProvider.createMenu(playerIn.currentWindowId, playerIn.inventory, playerIn);
-            Container container = original;
 
+            Container container = containerProvider.createMenu(playerIn.currentWindowId, fakePlayer.inventory, fakePlayer);
             if (container == null) {
                 if (playerIn.isSpectator()) {
                     playerIn.sendStatusMessage((new TranslationTextComponent("container.spectatorCantOpen")).mergeStyle(TextFormatting.RED), true);
@@ -125,7 +133,7 @@ public class PortableItem extends Item {
                 playerIn.connection.sendPacket(new SOpenWindowPacket(container.windowId, container.getType(), containerProvider.getDisplayName()));
                 container.addListener(playerIn);
                 playerIn.openContainer = container;
-                MinecraftForge.EVENT_BUS.post(new Open(playerIn, playerIn.openContainer));
+                MinecraftForge.EVENT_BUS.post(new Open(fakePlayer, playerIn.openContainer));
                 return OptionalInt.of(playerIn.currentWindowId);
             }
         }

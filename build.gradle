@@ -20,7 +20,7 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 minecraft {
     mappings  channel: "${mcp_channel}", version: "${mcp_mappings}"
 
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
@@ -98,7 +98,8 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 	
-    compile fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-1.16.4:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.4:${jei_version}")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
