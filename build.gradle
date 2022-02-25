@@ -78,20 +78,8 @@ minecraft {
 }
 
 repositories {
-    maven {
-        url 'https://www.dogforce-games.com/maven/'
-    }
-	maven {
-        url "http://maven.blamejared.com"
-	}
-	maven { 
-		url 'https://maven.mcmoddev.com' 
-	}
 	maven {
 		url = "http://dvs1.progwml6.com/files/maven"
-	}
-	maven {
-		url = "https://modmaven.k-4u.nl/"
 	}
 }
 
